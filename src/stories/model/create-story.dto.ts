@@ -1,5 +1,5 @@
 export class CreateStoryDto {
-    title: string;
-    text: string;
-    tag: string[];
+  title: string;
+  text: string;
+  tag: string[];
 }

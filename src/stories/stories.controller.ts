@@ -1,11 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateStoryDto } from './model/create-story.dto';
+import { StoriesService } from './providers/stories.service';
+import { Story } from './schemas/story.schema';
 
 @Controller('stories')
 export class StoriesController {
+  constructor(private readonly storiesService: StoriesService) {}
+
   @Get()
-  getAllPreview(): string {
-    return 'Get all stories preview';
+  getAllPreview(): Promise<Story[]> {
+    return this.storiesService.findAll();
   }
 
   @Get(':id')
@@ -15,7 +19,7 @@ export class StoriesController {
 
   @Post()
   createStory(@Body() createStoryDto: CreateStoryDto) {
-    console.log('Insert a new story');
+    this.storiesService.create(createStoryDto);
   }
 
   @Delete(':id')
