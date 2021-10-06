@@ -18,4 +18,11 @@ export class StoriesService {
   async findAll(): Promise<Story[]> {
     return this.storyModel.find().exec();
   }
+
+  deleteStory(id: string) {
+    this.storyModel
+      .deleteOne({ _id: id })
+      .exec()
+      .catch((error) => console.log(`Delete Story - Error: ${error}`));
+  }
 }

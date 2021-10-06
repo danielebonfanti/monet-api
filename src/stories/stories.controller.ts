@@ -23,7 +23,7 @@ export class StoriesController {
   }
 
   @Delete(':id')
-  deleteStoryById(@Param('id') id: string) {
-    console.log(`Delete ${id} story`);
+  deleteStoryById(@Param() params) {
+    this.storiesService.deleteStory(params.id);
   }
 }
