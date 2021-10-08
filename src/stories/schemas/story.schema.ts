@@ -10,6 +10,9 @@ export class Story {
   @Prop()
   text: string;
 
+  @Prop()
+  preview: string;
+
   @Prop([String])
   tags: string[];
 }

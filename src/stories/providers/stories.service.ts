@@ -15,8 +15,9 @@ export class StoriesService {
     return createdStory.save();
   }
 
-  async findAll(): Promise<Story[]> {
-    return this.storyModel.find().exec();
+  async find(id?: string): Promise<Story[]> {
+    const paramTosearch = id ? { _id: id } : undefined;
+    return this.storyModel.find(paramTosearch).exec();
   }
 
   deleteStory(id: string) {

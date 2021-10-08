@@ -8,13 +8,14 @@ export class StoriesController {
   constructor(private readonly storiesService: StoriesService) {}
 
   @Get()
-  getAllPreview(): Promise<Story[]> {
-    return this.storiesService.findAll();
+  async getAllPreview(): Promise<string[]> {
+    const stories = await this.storiesService.find();
+    return stories.map(story => {return story.preview});
   }
 
   @Get(':id')
-  getStoryById(@Param('id') id: string): string {
-    return `Get story by id ${id}`;
+  getStoryById(@Param('id') id: string): Promise<Story[]> {
+    return this.storiesService.find(id);
   }
 
   @Post()
