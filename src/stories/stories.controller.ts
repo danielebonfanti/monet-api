@@ -10,7 +10,11 @@ export class StoriesController {
   @Get()
   async getAllPreview(): Promise<string[]> {
     const stories = await this.storiesService.find();
-    return stories.map(story => {return story.preview});
+    return stories
+      .map((story) => {
+        return story.preview && story.preview;
+      })
+      .filter((previews) => previews);
   }
 
   @Get(':id')
