@@ -8,13 +8,13 @@ export class StoriesController {
   constructor(private readonly storiesService: StoriesService) {}
 
   @Get()
-  async getAllPreview(): Promise<string[]> {
+  async getAllPreview(): Promise<any> {
     const stories = await this.storiesService.find();
     return stories
       .map((story) => {
-        return story.preview && story.preview;
+        return { id: story._id, preview: story.preview };
       })
-      .filter((previews) => previews);
+      .filter((previews) => previews && previews.preview);
   }
 
   @Get(':id')
