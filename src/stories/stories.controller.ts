@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateStoryDto } from './model/create-story.dto';
 import { StoriesService } from './providers/stories.service';
 import { Story } from './schemas/story.schema';
@@ -22,11 +31,13 @@ export class StoriesController {
     return this.storiesService.find(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   createStory(@Body() createStoryDto: CreateStoryDto) {
     this.storiesService.create(createStoryDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   deleteStoryById(@Param() params) {
     this.storiesService.deleteStory(params.id);
