@@ -11,6 +11,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateStoryDto } from './model/create-story.dto';
 import { StoriesService } from './providers/stories.service';
 import { Story } from './schemas/story.schema';
+import snarkdown from 'snarkdown';
 
 @Controller('stories')
 export class StoriesController {
@@ -27,8 +28,10 @@ export class StoriesController {
   }
 
   @Get(':id')
-  getStoryById(@Param('id') id: string): Promise<Story[]> {
-    return this.storiesService.find(id);
+  async getStoryById(@Param('id') id: string): Promise<Story[]> {
+    const story = await this.storiesService.find(id);
+    story[0].text = snarkdown(story[0].text);
+    return story;
   }
 
   @UseGuards(JwtAuthGuard)
